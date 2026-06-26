@@ -51,17 +51,21 @@
                 <section class="sidebar__section">
                     <div class="sidebar__header">
                         <h2>Projects</h2>
+                        <button class="sidebar__btn-add-project" id="btn-open-project-modal" aria-label="Create new project">
+                            <span class="sidebar__btn-icon" aria-hidden="true">+</span>
+                        </button>
                     </div>
-                    <ul class="sidebar__project-list">
+                    
+                    <ul class="sidebar__project-list" id="projects-list">
                         <li class="sidebar__project-item">
                             <button class="sidebar__project-button">
-                                <div class="sidebar__project-dot" aria-hidden="true"></div>
+                                <div class="sidebar__project-dot" style="background-color: #3b82f6;" aria-hidden="true"></div>
                                 <span class="sidebar__project-name">Personal</span>
                             </button>
                         </li>
                         <li class="sidebar__project-item">
                             <button class="sidebar__project-button">
-                                <div class="sidebar__project-dot" aria-hidden="true"></div>
+                                <div class="sidebar__project-dot" style="background-color: #f59e0b;" aria-hidden="true"></div>
                                 <span class="sidebar__project-name">Work</span>
                             </button>
                         </li>
@@ -276,6 +280,50 @@
                     <footer class="form-task__actions">
                         <button type="button" class="form-task__btn-cancel" id="btn-cancel-task">Cancel</button>
                         <button type="submit" class="form-task__btn-submit">Add Task</button>
+                    </footer>
+
+                </form>
+            </div>
+        </div>
+
+        <div class="modal" id="project-modal" role="dialog" aria-labelledby="project-modal-title" aria-hidden="true">
+            <div class="modal__overlay" tabindex="-1"></div>
+            
+            <div class="modal__container modal__container--small">
+                <header class="modal__header">
+                    <h2 id="project-modal-title" class="modal__title">Create New Project</h2>
+                    <button class="modal__close" id="btn-close-project-modal" aria-label="Close modal">×</button>
+                </header>
+
+                <form class="form-task" id="form-new-project" autocomplete="off">
+                    
+                    <div class="form-task__group">
+                        <label for="project-name" class="form-task__label">Project Name *</label>
+                        <input 
+                            type="text" 
+                            id="project-name" 
+                            class="form-task__input" 
+                            placeholder="e.g., Freelance, Home Reforms..." 
+                            required
+                        >
+                    </div>
+
+                    <div class="form-task__group">
+                        <label for="project-color" class="form-task__label">Project Color</label>
+                        <div class="form-task__color-picker-wrapper">
+                            <input 
+                                type="color" 
+                                id="project-color" 
+                                class="form-task__color-input" 
+                                value="#3b82f6"
+                            >
+                            <span class="form-task__color-help">This color will represent the project in your sidebar and tasks.</span>
+                        </div>
+                    </div>
+
+                    <footer class="form-task__actions">
+                        <button type="button" class="form-task__btn-cancel" id="btn-cancel-project">Cancel</button>
+                        <button type="submit" class="form-task__btn-submit">Create Project</button>
                     </footer>
 
                 </form>

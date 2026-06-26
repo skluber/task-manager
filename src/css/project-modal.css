@@ -1,0 +1,38 @@
+.modal__container--small {
+  max-width: 400px;
+}
+
+.form-task__color-picker-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.form-task__color-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 44px;
+  height: 44px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.form-task__color-input::-webkit-color-swatch {
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+}
+
+.form-task__color-input::-moz-color-swatch {
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+}
+
+.form-task__color-help {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
