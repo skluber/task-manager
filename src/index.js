@@ -7,3 +7,6 @@ import './css/task-card.css';
 import './css/task-card-completed.css';
 import './css/task-modal.css';
 import './css/project-modal.css';
+import { AppController } from './modules/AppController.js';
+
+const app = new AppController();

@@ -3,13 +3,22 @@ import { Task } from './Task.js';
 
 export class TaskManager {
     constructor() {
-        this.projects = [];
-        this.tasks = [];
+        this.projects = this.#loadFromStorage("projects").map(p => new Project(p));
+        this.tasks = this.#loadFromStorage("tasks").map(t => new Task(t));
     }
 
     // ==========================================================================
     // PRIVATE helpers 
     // ==========================================================================
+
+    #saveToStorage(key, data) {
+        localStorage.setItem(key, JSON.stringify(data));
+    }
+
+    #loadFromStorage(key) {
+        const data = localStorage.getItem(key);
+        return data ? JSON.parse(data) : [];
+    }
 
     #projectExists(projectId) {
         return this.projects.some(p => p.projectId === projectId);
