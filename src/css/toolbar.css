@@ -1,0 +1,29 @@
+/* src/styles/toolbar.css */
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 40px;
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.toolbar__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.toolbar__btn-add {
+  background-color: #0f172a;
+  color: #ffffff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.toolbar__btn-add:hover {
+  background-color: #1e293b;
+}

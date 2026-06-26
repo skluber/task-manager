@@ -1,0 +1,77 @@
+/* src/styles/sidebar.css */
+
+.sidebar {
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.sidebar__brand {
+  margin-bottom: 32px;
+}
+
+.sidebar__brand-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar__user-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.sidebar__user-name {
+  font-weight: 600;
+}
+
+.sidebar__section {
+  margin-bottom: 24px;
+}
+
+.sidebar__header h2 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.sidebar__filter-button,
+.sidebar__project-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--text-main);
+  transition: background-color 0.2s ease;
+}
+
+.sidebar__filter-button:hover,
+.sidebar__project-button:hover {
+  background-color: #f1f5f9;
+}
+
+.sidebar__filter-button--active {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  font-weight: 500;
+}
+
+.sidebar__filter-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.sidebar__project-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--text-muted);
+}

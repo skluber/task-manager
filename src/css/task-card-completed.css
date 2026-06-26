@@ -1,0 +1,39 @@
+.task-card--completed {
+  opacity: 0.6;
+  background-color: #f8fafc; /* Un fondo ligeramente más grisáceo */
+  border-left-color: var(--color-completed);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Efecto sutil: si el usuario pasa el ratón por encima, recupera brillo por si quiere editarla o desmarcarla */
+.task-card--completed:hover {
+  opacity: 0.85;
+}
+
+/* 2. Tamos el título y cambiamos el color del texto a uno más suave */
+.task-card--completed .task-card__title {
+  text-decoration: line-through;
+  color: var(--text-muted);
+  font-weight: 500; /* Reducimos un poco el grosor visual */
+}
+
+/* 3. Atenuamos la descripción */
+.task-card--completed .task-card__description {
+  color: #94a3b8; /* Un gris todavía más claro */
+  text-decoration: line-through; /* Opcional: puedes quitar el tachado de aquí si prefieres que solo se tache el título */
+}
+
+/* 4. Suavizamos las etiquetas de meta (fecha e iconos) */
+.task-card--completed .task-card__date {
+  color: #94a3b8;
+}
+
+.task-card--completed .task-card__meta-icon {
+  opacity: 0.5; /* Apaga el icono del calendario */
+}
+
+/* 5. Apagamos el color de la prioridad para que no llame la atención */
+.task-card--completed .task-card__priority {
+  background-color: #e2e8f0; /* Cambiamos su color brillante por un gris neutro */
+  color: #64748b;
+}

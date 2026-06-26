@@ -1,0 +1,185 @@
+/**
+ * normalize.css v1.0.0 | MIT License
+ * A clean, modern, and consistent style baseline for cross-browser development.
+ */
+
+/* ==========================================================================
+   1. Global Configuration & Rendering Fixes
+   ========================================================================== */
+
+/**
+ * 1. Use a border-box box model by default for all elements.
+ * (Ensures padding and borders do not alter the final computed width).
+ * 2. Prevent iOS from automatically adjusting text size after orientation changes.
+ * 3. Set a clean system typography stack and optimize readability.
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* 1 */
+}
+
+html {
+  line-height: 1.5; /* Accessible default line height */
+  -webkit-text-size-adjust: 100%; /* 2 */
+  -moz-tab-size: 4; /* Consistency in tab spacing */
+  tab-size: 4;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'; /* 3 */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/**
+ * Remove the default margin across all browsers.
+ */
+body {
+  margin: 0;
+}
+
+/* ==========================================================================
+   2. Structural and Content Elements
+   ========================================================================== */
+
+/**
+ * Correct the display in Edge and IE.
+ */
+main {
+  display: block;
+}
+
+/**
+ * Correct the font size and margin of H1 elements within sections.
+ */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/**
+ * 1. Correct the word-weight inheritance in Chrome, Edge, and Safari.
+ * 2. Prevent strong elements from styling as 'bolder' inherently.
+ */
+b,
+strong {
+  font-weight: bold; /* 1 & 2 */
+}
+
+/**
+ * 1. Correct the inheritance of font family for computer code.
+ * 2. Correct the em font size across all browsers.
+ */
+code,
+kbd,
+samp,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/**
+ * Prevent strange line breaks in preformatted code blocks.
+ */
+pre {
+  margin: 0;
+  overflow: auto;
+}
+
+/**
+ * Reset lists commonly used for layout structures (ideal for BEM menus and boards).
+ * Note: This clears default padding/margins but keeps list items clean for flexbox/grid layout.
+ */
+ul,
+ol {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none; /* Standard behavior for modern UI layout development */
+}
+
+/* ==========================================================================
+   3. Forms and Button Elements
+   ========================================================================== */
+
+/**
+ * 1. Correct the font inheritance across all browsers.
+ * 2. Remove default margins in Firefox and Safari.
+ */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: inherit; /* 1 */
+  margin: 0; /* 2 */
+}
+
+/**
+ * Correct the inability to style clickable buttons in iOS and Safari.
+ */
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  -webkit-appearance: button;
+  background-color: transparent;
+  border: none;
+}
+
+/**
+ * Apply the pointer cursor to buttons to improve User Experience (UX).
+ */
+button,
+select {
+  text-transform: none;
+  cursor: pointer;
+}
+
+/**
+ * Remove the inner padding and focus borders in Firefox.
+ */
+::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+/**
+ * Prevent textareas from being resized horizontally and breaking the layout.
+ */
+textarea {
+  resize: vertical; /* Allows resizing only vertically to preserve column bounds */
+}
+
+/* ==========================================================================
+   4. Multimedia and Graphics
+   ========================================================================== */
+
+/**
+ * 1. Prevent images from overflowing their parent containers (Responsive by default).
+ * 2. Remove the extra residual bottom space browsers add to inline images.
+ */
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block; /* 2 */
+  max-width: 100%; /* 1 */
+  height: auto; /* 1 */
+}
+
+/**
+ * Configure SVGs to inherit text color smoothly for UI icon implementation.
+ */
+svg {
+  fill: currentColor;
+}

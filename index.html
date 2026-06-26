@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo-List</title>
+</head>
+<body>
+    <div class="page-container"> 
+        
+        <aside class="sidebar">
+
+            <header class="sidebar__brand">
+                <div class="sidebar__brand-header">
+                    <img src="avatar.png" alt="User avatar" class="sidebar__user-img">
+                    <span class="sidebar__user-name">John Doe</span>
+                </div>
+            </header>
+
+            <nav class="sidebar__nav" aria-label="Sidebar Navigation">
+
+                <section class="sidebar__section">
+
+                    <div class="sidebar__header">
+                        <h2>Filters</h2>
+                    </div>
+
+                    <ul class="sidebar__filter-list">
+                        <li class="sidebar__filter-item">
+                            <button class="sidebar__filter-button sidebar__filter-button--active" aria-current="page">
+                                <img src="today.png" alt="" class="sidebar__filter-icon">
+                                <span class="sidebar__filter-label">Today</span>
+                            </button>
+                        </li>
+                        <li class="sidebar__filter-item">
+                            <button class="sidebar__filter-button">
+                                <img src="week.png" alt="" class="sidebar__filter-icon">
+                                <span class="sidebar__filter-label">This week</span>
+                            </button>
+                        </li>
+                        <li class="sidebar__filter-item">
+                            <button class="sidebar__filter-button">
+                                <img src="all-tasks.png" alt="" class="sidebar__filter-icon">
+                                <span class="sidebar__filter-label">All Tasks</span>
+                            </button>
+                        </li>
+                    </ul>
+                    
+                </section>
+
+                <section class="sidebar__section">
+                    <div class="sidebar__header">
+                        <h2>Projects</h2>
+                    </div>
+                    <ul class="sidebar__project-list">
+                        <li class="sidebar__project-item">
+                            <button class="sidebar__project-button">
+                                <div class="sidebar__project-dot" aria-hidden="true"></div>
+                                <span class="sidebar__project-name">Personal</span>
+                            </button>
+                        </li>
+                        <li class="sidebar__project-item">
+                            <button class="sidebar__project-button">
+                                <div class="sidebar__project-dot" aria-hidden="true"></div>
+                                <span class="sidebar__project-name">Work</span>
+                            </button>
+                        </li>
+                    </ul>
+                </section>
+                
+            </nav>
+
+            <footer class="sidebar__links"></footer>
+
+        </aside>
+
+        <main class="main">
+
+            <header class="toolbar">
+                <div class="toolbar__header">
+                    <h1 class="toolbar__title">My Tasks</h1>
+                </div>
+                <div class="toolbar__actions">
+                    <button class="toolbar__btn-add">Add New Task</button>
+                </div>
+            </header>
+
+            <section class="task-board">
+
+                <section class="task-board__column" id="column-todo" aria-labelledby="todo-heading">
+                    <header class="task-board__column-header">
+                        <div class="task-board__column-info">
+                            <h2 id="todo-heading" class="task-board__column-title">To Do</h2>
+                            <span class="task-board__column-count">1</span>
+                        </div>
+                    </header>
+                    
+                    <ul class="task-board__list">
+                        <li class="task-board__item">
+                            <article class="task-card task-card--todo">
+                                
+                                <div class="task-card__completion">
+                                    <input type="checkbox" id="task-1-check" class="task-card__checkbox">
+                                    <label for="task-1-check" class="sr-only">Mark "Design new dashboard" as completed</label>
+                                </div>
+
+                                <div class="task-card__content">
+                                    <h3 class="task-card__title">Design new dashboard</h3>
+                                    <p class="task-card__description">Create wireframes and mockups for the desktop view.</p>
+                                    
+                                    <footer class="task-card__meta">
+                                        <time datetime="2026-06-30" class="task-card__date">
+                                            <img src="calendar.png" alt="" class="task-card__meta-icon">
+                                            Jun 30, 2026
+                                        </time>
+                                        
+                                        <div class="task-card__badges">
+                                            <span class="task-card__project-badge">Personal</span>
+                                            <span class="task-card__priority task-card__priority--high">High</span>
+                                        </div>
+                                    </footer>
+                                </div>
+
+                            </article>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="task-board__column" id="column-progress" aria-labelledby="progress-heading">
+                    <header class="task-board__column-header">
+                        <div class="task-board__column-info">
+                            <h2 id="progress-heading" class="task-board__column-title">In Progress</h2>
+                            <span class="task-board__column-count">1</span>
+                        </div>
+                    </header>
+                    
+                    <ul class="task-board__list">
+                        <li class="task-board__item">
+                            <article class="task-card task-card--progress">
+                                
+                                <div class="task-card__completion">
+                                    <input type="checkbox" id="task-2-check" class="task-card__checkbox">
+                                    <label for="task-2-check" class="sr-only">Mark "Refactor Sidebar Component" as completed</label>
+                                </div>
+
+                                <div class="task-card__content">
+                                    <h3 class="task-card__title">Refactor Sidebar Component</h3>
+                                    <p class="task-card__description">Convert the hardcoded HTML sidebar structure into a dynamic JS layout.</p>
+                                    
+                                    <footer class="task-card__meta">
+                                        <time datetime="2026-06-30" class="task-card__date">
+                                            <img src="calendar.png" alt="" class="task-card__meta-icon">
+                                            Jun 30, 2026
+                                        </time>
+                                        
+                                        <div class="task-card__badges">
+                                            <span class="task-card__project-badge">Personal</span>
+                                            <span class="task-card__priority task-card__priority--high">High</span>
+                                        </div>
+                                    </footer>
+                                </div>
+
+                            </article>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="task-board__column" id="column-completed" aria-labelledby="completed-heading">
+                    <header class="task-board__column-header">
+                        <div class="task-board__column-info">
+                            <h2 id="completed-heading" class="task-board__column-title">Completed</h2>
+                            <span class="task-board__column-count">1</span>
+                        </div>
+                    </header>
+                    
+                    <ul class="task-board__list">
+                        <li class="task-board__item">
+                            <article class="task-card task-card--completed">
+                                
+                                <div class="task-card__completion">
+                                    <input type="checkbox" id="task-3-check" class="task-card__checkbox" checked>
+                                    <label for="task-3-check" class="sr-only">Unmark "Setup project repository" as completed</label>
+                                </div>
+
+                                <div class="task-card__content">
+                                    <h3 class="task-card__title">Setup project repository</h3>
+                                    <p class="task-card__description">Initial Git commit, README file setup, and folder structure initialized.</p>
+                                    
+                                    <footer class="task-card__meta">
+                                        <time datetime="2026-06-30" class="task-card__date">
+                                            <img src="calendar.png" alt="" class="task-card__meta-icon">
+                                            Jun 30, 2026
+                                        </time>
+                                        
+                                        <div class="task-card__badges">
+                                            <span class="task-card__project-badge">Personal</span>
+                                            <span class="task-card__priority task-card__priority--high">High</span>
+                                        </div>
+                                    </footer>
+                                </div>
+
+                            </article>
+                        </li>
+                    </ul>
+                </section>
+
+            </section>
+
+        </main>
+
+        <div class="modal" id="task-modal" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+            <div class="modal__overlay" tabindex="-1"></div>
+            
+            <div class="modal__container">
+                <header class="modal__header">
+                    <h2 id="modal-title" class="modal__title">Create New Task</h2>
+                    <button class="modal__close" id="btn-close-modal" aria-label="Close modal">×</button>
+                </header>
+
+                <form class="form-task" id="form-new-task" autocomplete="off">
+                    
+                    <div class="form-task__group">
+                        <label for="task-title" class="form-task__label">Task Title *</label>
+                        <input 
+                            type="text" 
+                            id="task-title" 
+                            class="form-task__input" 
+                            placeholder="e.g., Fix sidebar responsiveness" 
+                            required
+                        >
+                    </div>
+
+                    <div class="form-task__group">
+                        <label for="task-desc" class="form-task__label">Description</label>
+                        <textarea 
+                            id="task-desc" 
+                            class="form-task__textarea" 
+                            placeholder="Provide some details about this task..."
+                            rows="3"
+                        ></textarea>
+                    </div>
+
+                    <div class="form-task__row">
+    
+                        <div class="form-task__group">
+                            <label for="task-date" class="form-task__label">Due Date *</label>
+                            <input 
+                                type="date" 
+                                id="task-date" 
+                                class="form-task__input" 
+                                required
+                            >
+                        </div>
+
+                        <div class="form-task__group">
+                            <label for="task-priority" class="form-task__label">Priority *</label>
+                            <select id="task-priority" class="form-task__select" required>
+                                <option value="" disabled selected>Select priority</option>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+
+                        <div class="form-task__group">
+                            <label for="task-project" class="form-task__label">Project *</label>
+                            <select id="task-project" class="form-task__select" required>
+                                <option value="" disabled selected>Select project</option>
+                                <option value="personal">Personal</option>
+                                <option value="work">Work</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <footer class="form-task__actions">
+                        <button type="button" class="form-task__btn-cancel" id="btn-cancel-task">Cancel</button>
+                        <button type="submit" class="form-task__btn-submit">Add Task</button>
+                    </footer>
+
+                </form>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
