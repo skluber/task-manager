@@ -175,6 +175,10 @@
             checkbox.type = "checkbox";
             checkbox.dataset.id = task.taskId;
             checkbox.className = "task-card__checkbox";
+            
+            if (task.status === "completed") {
+                checkbox.checked = "checked";
+            }
 
             const checkboxLabel = document.createElement("label");
             checkboxLabel.htmlFor = task.taskId;

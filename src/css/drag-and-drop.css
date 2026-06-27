@@ -1,0 +1,40 @@
+
+.task-card--dragging {
+    opacity: 0.4;
+    transform: scale(0.98);
+    border: 2px dashed var(--badge-color, #3b82f6);
+    cursor: grabbing;
+    transition: transform 0.1s ease, opacity 0.1s ease;
+}
+
+.tasks-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-height: 400px; 
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: transparent;
+    transition: background-color 0.2s ease, border 0.2s ease;
+}
+
+.board__column--hovered .tasks-container {
+    background-color: rgba(59, 130, 246, 0.05); /* Un sutil fondo azulado translúcido */
+    border: 2px dashed rgba(59, 130, 246, 0.3);
+    outline: none;
+}
+
+.task-card {
+    cursor: grab;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    user-select: none; /* Evita que se seleccione el texto azul de la tarjeta al arrastrar */
+}
+
+.task-card:active {
+    cursor: grabbing;
+}
+
+.task-card:hover:not(.task-card--dragging) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
