@@ -1,3 +1,5 @@
+    import { IconManager } from './IconManager.js';
+    
     export class DOMRenderer {
         static get #elements() {
             return {
@@ -219,12 +221,12 @@
             dueDate.dateTime = task.dueDate;
             dueDate.textContent = task.dueDate ? `${task.dueDate}` : "No due date";
 
-            const calendarImg = document.createElement("img");
-            calendarImg.src = "./assets/calendar.png";
-            calendarImg.alt = "Calendar icon";
-            calendarImg.className = "task-card__meta-icon";
+            const calendarIconContainer = document.createElement("span");
+            calendarIconContainer.className = "task-card__meta-icon";
+            calendarIconContainer.innerHTML = IconManager.get('calendar'); 
+            calendarIconContainer.setAttribute("aria-label", "Calendar icon");
 
-            dueDate.appendChild(calendarImg);
+            dueDate.prepend(calendarIconContainer);
 
             const badges = document.createElement("div");
             badges.className = "task-card__badges";
