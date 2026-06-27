@@ -148,6 +148,17 @@
 
             const article = document.createElement("article");
             article.classList.add("task-card", `task-card--${task.status}`);
+            
+            article.draggable = true;
+
+            article.addEventListener("dragstart", (e) => {
+                e.dataTransfer.setData("text/plain", task.taskId);
+                article.classList.add("task-card--dragging"); 
+            });
+
+            article.addEventListener("dragend", () => {
+                article.classList.remove("task-card--dragging");
+            });
 
             article.appendChild(DOMRenderer.#createTaskCompletion(task));
             article.appendChild(DOMRenderer.#createTaskInfo(task, projectName, projectColor));

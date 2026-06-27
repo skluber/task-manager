@@ -26,6 +26,7 @@ export class AppController {
     setupEventsListeners() {
         this.#setupProjectModalEvents();
         this.#setupTaskModalEvents();
+        this.#setupDraggableColumns();
     }
 
     // ==========================================================================
@@ -66,6 +67,42 @@ export class AppController {
         if (form) {
             form.addEventListener("submit", (e) => this.#handleTaskSubmit(e));
         }
+    }
+
+    #setupDraggableColumns() {
+        const columns = document.querySelectorAll(".task-board__column"); 
+
+        columns.forEach(column => {
+            column.addEventListener("dragover", (e) => {
+                e.preventDefault(); 
+            });
+
+            column.addEventListener("dragenter", () => {
+                column.classList.add("board__column--hovered");
+            });
+
+            column.addEventListener("dragleave", () => {
+                column.classList.remove("board__column--hovered");
+            });
+
+            column.addEventListener("drop", (e) => {
+                column.classList.remove("board__column--hovered");
+                
+                const taskId = e.dataTransfer.getData("text/plain");
+                const newStatus = e.currentTarget.dataset.status; 
+
+                try {
+                    this.TaskManager.updateTaskStatus(taskId, newStatus);
+                    
+                    setTimeout(() => {
+                        DOMRenderer.renderTasks(this.TaskManager.tasks, this.TaskManager.projects);
+                    }, 0);
+
+                } catch (error) {
+                    console.error(error.message);
+                }
+            });
+        });
     }
 
     // ==========================================================================
