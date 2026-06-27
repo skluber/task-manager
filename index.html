@@ -73,7 +73,7 @@
                     <h1 class="toolbar__title">My Tasks</h1>
                 </div>
                 <div class="toolbar__actions">
-                    <button class="toolbar__btn-add">Add New Task</button>
+                    <button id="btn-open-task-modal" class="toolbar__btn-add">Add New Task</button>
                 </div>
             </header>
 
@@ -83,38 +83,11 @@
                     <header class="task-board__column-header">
                         <div class="task-board__column-info">
                             <h2 id="todo-heading" class="task-board__column-title">To Do</h2>
-                            <span class="task-board__column-count">1</span>
+                            <span class="task-board__column-count">0</span>
                         </div>
                     </header>
                     
-                    <ul class="task-board__list">
-                        <li class="task-board__item">
-                            <article class="task-card task-card--todo">
-                                
-                                <div class="task-card__completion">
-                                    <input type="checkbox" id="task-1-check" class="task-card__checkbox">
-                                    <label for="task-1-check" class="sr-only">Mark "Design new dashboard" as completed</label>
-                                </div>
-
-                                <div class="task-card__content">
-                                    <h3 class="task-card__title">Design new dashboard</h3>
-                                    <p class="task-card__description">Create wireframes and mockups for the desktop view.</p>
-                                    
-                                    <footer class="task-card__meta">
-                                        <time datetime="2026-06-30" class="task-card__date">
-                                            <img src="calendar.png" alt="" class="task-card__meta-icon">
-                                            Jun 30, 2026
-                                        </time>
-                                        
-                                        <div class="task-card__badges">
-                                            <span class="task-card__project-badge">Personal</span>
-                                            <span class="task-card__priority task-card__priority--high">High</span>
-                                        </div>
-                                    </footer>
-                                </div>
-
-                            </article>
-                        </li>
+                    <ul class="task-board__list" id="todo_ul_list">
                     </ul>
                 </section>
 
@@ -122,38 +95,11 @@
                     <header class="task-board__column-header">
                         <div class="task-board__column-info">
                             <h2 id="progress-heading" class="task-board__column-title">In Progress</h2>
-                            <span class="task-board__column-count">1</span>
+                            <span class="task-board__column-count">0</span>
                         </div>
                     </header>
                     
-                    <ul class="task-board__list">
-                        <li class="task-board__item">
-                            <article class="task-card task-card--progress">
-                                
-                                <div class="task-card__completion">
-                                    <input type="checkbox" id="task-2-check" class="task-card__checkbox">
-                                    <label for="task-2-check" class="sr-only">Mark "Refactor Sidebar Component" as completed</label>
-                                </div>
-
-                                <div class="task-card__content">
-                                    <h3 class="task-card__title">Refactor Sidebar Component</h3>
-                                    <p class="task-card__description">Convert the hardcoded HTML sidebar structure into a dynamic JS layout.</p>
-                                    
-                                    <footer class="task-card__meta">
-                                        <time datetime="2026-06-30" class="task-card__date">
-                                            <img src="calendar.png" alt="" class="task-card__meta-icon">
-                                            Jun 30, 2026
-                                        </time>
-                                        
-                                        <div class="task-card__badges">
-                                            <span class="task-card__project-badge">Personal</span>
-                                            <span class="task-card__priority task-card__priority--high">High</span>
-                                        </div>
-                                    </footer>
-                                </div>
-
-                            </article>
-                        </li>
+                    <ul class="task-board__list" id="progress_ul_list">
                     </ul>
                 </section>
 
@@ -161,38 +107,11 @@
                     <header class="task-board__column-header">
                         <div class="task-board__column-info">
                             <h2 id="completed-heading" class="task-board__column-title">Completed</h2>
-                            <span class="task-board__column-count">1</span>
+                            <span class="task-board__column-count">0</span>
                         </div>
                     </header>
                     
-                    <ul class="task-board__list">
-                        <li class="task-board__item">
-                            <article class="task-card task-card--completed">
-                                
-                                <div class="task-card__completion">
-                                    <input type="checkbox" id="task-3-check" class="task-card__checkbox" checked>
-                                    <label for="task-3-check" class="sr-only">Unmark "Setup project repository" as completed</label>
-                                </div>
-
-                                <div class="task-card__content">
-                                    <h3 class="task-card__title">Setup project repository</h3>
-                                    <p class="task-card__description">Initial Git commit, README file setup, and folder structure initialized.</p>
-                                    
-                                    <footer class="task-card__meta">
-                                        <time datetime="2026-06-30" class="task-card__date">
-                                            <img src="calendar.png" alt="" class="task-card__meta-icon">
-                                            Jun 30, 2026
-                                        </time>
-                                        
-                                        <div class="task-card__badges">
-                                            <span class="task-card__project-badge">Personal</span>
-                                            <span class="task-card__priority task-card__priority--high">High</span>
-                                        </div>
-                                    </footer>
-                                </div>
-
-                            </article>
-                        </li>
+                    <ul class="task-board__list" id="completed_ul_list"">
                     </ul>
                 </section>
 
@@ -235,12 +154,11 @@
                     <div class="form-task__row">
     
                         <div class="form-task__group">
-                            <label for="task-date" class="form-task__label">Due Date *</label>
+                            <label for="task-date" class="form-task__label">Due Date</label>
                             <input 
                                 type="date" 
                                 id="task-date" 
                                 class="form-task__input" 
-                                required
                             >
                         </div>
 

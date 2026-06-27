@@ -20,7 +20,7 @@ export class TaskManager {
         return data ? JSON.parse(data) : [];
     }
 
-    #projectExists(projectId) {
+    #projectIdExists(projectId) {
         return this.projects.some(p => p.projectId === projectId);
     }
 
@@ -44,16 +44,19 @@ export class TaskManager {
 
         const newProject = new Project(projectData);
         this.projects.push(newProject);
+        this.#saveToStorage("projects", this.projects)
         return newProject;
     }
 
     deleteProject(projectId) {
-        if (!this.#projectExists(projectId)) {
+        if (!this.#projectIdExists(projectId)) {
             throw new Error(`Project Manager Error: Cannot delete. Project ID "${projectId}" not found.`);
         }
         
         this.projects = this.projects.filter(p => p.projectId !== projectId);
         this.tasks = this.tasks.filter(t => t.projectId !== projectId);
+        this.#saveToStorage("projects", this.projects);
+        this.#saveToStorage("tasks", this.tasks);
     }
 
     // ==========================================================================
@@ -61,12 +64,13 @@ export class TaskManager {
     // ==========================================================================
 
     addTask(taskData) {
-        if (!this.#projectExists(taskData.projectId)) {
+        if (!this.#projectIdExists(taskData.projectId)) {
             throw new Error(`Task Manager Error: Cannot add task. Project ID "${taskData.projectId}" does not exist.`);
         }
 
         const newTask = new Task(taskData);
         this.tasks.push(newTask);
+        this.#saveToStorage("tasks", this.tasks);
         return newTask;
     }
 
@@ -76,27 +80,43 @@ export class TaskManager {
         }
 
         this.tasks = this.tasks.filter(t => t.taskId !== taskId)
+        this.#saveToStorage("tasks", this.tasks);
     }
 
     // ==========================================================================
     // FILTER / QUERY operations
     // ==========================================================================
     
-    getTasksByProject(projectId){
-        if (!this.#projectExists(projectId)) {
+    getTasksByProject(projectId) {
+        if (!this.#projectIdExists(projectId)) {
             throw new Error(`Task Manager Error: Cannot get tasks. Project ID "${projectId}" does not exist.`);
         }
-
+        
         return this.tasks.filter(t => t.projectId === projectId);
     }
 
-    updateTaskStatus(taskId, newStatus){
+    getProjectIdByName(projectName) {
+        if (!this.#projectNameExists(projectName)) {
+            throw new Error(`Task Manager Error: Project Name "${projectName}" does not exist.`);
+        }
+
+        const project = this.projects.find(p => p.name === projectName);
+        return project.projectId;
+    }
+
+    updateTaskStatus(taskId, newStatus) {
         if (!this.#taskIdExists(taskId)) {
             throw new Error(`Task Manager Error: Cannot update task. Task ID "${taskId}" does not exist.`);
-        } 
+        }
 
-        const task = this.tasks.filter(t => t.taskId === taskId);
-        task.status = ["todo", "progress", "completed"].includes(newStatus) ? newStatus : task.status;
+        if (!["todo", "progress", "completed"].includes(newStatus)) {
+            throw new Error(`Task Manager Error: Invalid status "${newStatus}".`);
+        }
+
+        const task = this.tasks.find(t => t.taskId === taskId);
+        task.status = newStatus;
+        
+        this.#saveToStorage("tasks", this.tasks);
         return task;
     }
 }

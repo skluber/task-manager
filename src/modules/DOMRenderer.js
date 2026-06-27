@@ -1,71 +1,234 @@
-export class DOMRenderer {
-    static #elements = {
-        // Modal & Forms
-        taskModal: document.getElementById("task-modal"),
-        projectModal: document.getElementById("project-modal"),
-        taskForm: document.getElementById("form-new-task"),
-        projectForm: document.getElementById("form-new-project"),
+    export class DOMRenderer {
+        static get #elements() {
+            return {
+                // Modal & Forms
+                taskModal: document.getElementById("task-modal"),
+                projectModal: document.getElementById("project-modal"),
+                taskForm: document.getElementById("form-new-task"),
+                projectForm: document.getElementById("form-new-project"),
+                projectsList: document.getElementById("projects-list"),
 
-        // Lists
-        projectsList: document.getElementById("projects-list")
-    }
+                // Columns
+                todoColumn: document.getElementById("todo_ul_list"),
+                progressColumn: document.getElementById("progress_ul_list"),
+                completedColumn: document.getElementById("completed_ul_list"),
 
-    static openModal(type) {
-        const modal = type === "task" ? DOMRenderer.#elements.taskModal : DOMRenderer.#elements.projectModal;
+                // Counters
+                todoCount: document.querySelector("#column-todo .task-board__column-count"),
+                progressCount: document.querySelector("#column-progress .task-board__column-count"),
+                completedCount: document.querySelector("#column-completed .task-board__column-count")
+            };
+        }
 
-        if (!modal) return;
+        static openModal(type) {
+            const modal = type === "task" ? DOMRenderer.#elements.taskModal : DOMRenderer.#elements.projectModal;
 
-        modal.classList.add("modal--show");
-        modal.setAttribute("aria-hidden", "false");
+            console.log("Test" + modal)
+            if (!modal) return;
 
-        const focusFirst = modal.querySelector("input");
-        if (focusFirst) focusFirst.focus();
-    }
+            modal.classList.add("modal--show");
+            modal.setAttribute("aria-hidden", "false");
 
-    static closeModal(type) {
-        const modal = type === "task" ? DOMRenderer.#elements.taskModal : DOMRenderer.#elements.projectModal;
-        const form = type === "task" ? DOMRenderer.#elements.taskForm : DOMRenderer.#elements.projectForm;
+            const focusFirst = modal.querySelector("input");
+            if (focusFirst) focusFirst.focus();
+        }
 
-        if (!modal) return;
+        static closeModal(type) {
+            const modal = type === "task" ? DOMRenderer.#elements.taskModal : DOMRenderer.#elements.projectModal;
+            const form = type === "task" ? DOMRenderer.#elements.taskForm : DOMRenderer.#elements.projectForm;
 
-        modal.classList.remove("modal--show");
-        modal.setAttribute("aria-hidden", "true");
+            if (!modal) return;
 
-        if (form) form.reset();
-    }
+            modal.classList.remove("modal--show");
+            modal.setAttribute("aria-hidden", "true");
 
-    static renderProjectsSidebar(projects) {
-        if (!DOMRenderer.#elements.projectsList) return;
+            if (form) form.reset();
+        }
 
-        DOMRenderer.#elements.projectsList.innerHTML = "";
+        static renderProjectsSidebar(projects) {
+            if (!DOMRenderer.#elements.projectsList) return;
 
-        projects.forEach(project => {
-            // 1. LI
-            const listItem = document.createElement("li");
-            listItem.className = "sidebar__project-item";
-            listItem.dataset.id = project.projectId;
+            DOMRenderer.#elements.projectsList.innerHTML = "";
 
-            // 2. Button
-            const button = document.createElement("button");
-            button.className = "sidebar__project-button";
+            projects.forEach(project => {
+                // 1. LI
+                const listItem = document.createElement("li");
+                listItem.className = "sidebar__project-item";
+                listItem.dataset.id = project.projectId;
 
-            // 3. Dot
-            const dot = document.createElement("div");
-            dot.className = "sidebar__project-dot";
-            dot.style.backgroundColor = project.color;
-            dot.setAttribute('aria-hidden', 'true');
+                // 2. Button
+                const button = document.createElement("button");
+                button.className = "sidebar__project-button";
 
-            // 4. Project Name
-            const name = document.createElement("span");
-            name.className = "sidebar__project-name";
-            name.textContent = project.name;
+                // 3. Dot
+                const dot = document.createElement("div");
+                dot.className = "sidebar__project-dot";
+                dot.style.backgroundColor = project.color;
+                dot.setAttribute('aria-hidden', 'true');
 
-            // 5. Appends
-            button.appendChild(dot);
-            button.appendChild(name);
-            listItem.appendChild(button);
+                // 4. Project Name
+                const name = document.createElement("span");
+                name.className = "sidebar__project-name";
+                name.textContent = project.name;
+
+                // 5. Appends
+                button.appendChild(dot);
+                button.appendChild(name);
+                listItem.appendChild(button);
+                
+                DOMRenderer.#elements.projectsList.appendChild(listItem);
+            });
+        }
+
+        static renderTasks(tasks, projects) {
+            const { todoColumn, progressColumn, completedColumn, 
+                    todoCount, progressCount, completedCount } = DOMRenderer.#elements;
             
-            DOMRenderer.#elements.projectsList.appendChild(listItem);
-        });
+
+            if (todoColumn) todoColumn.innerHTML = "";
+            if (progressColumn) progressColumn.innerHTML = "";
+            if (completedColumn) completedColumn.innerHTML = "";
+
+            let todoCounters = 0;
+            let progressCounters = 0;
+            let completedCounters = 0;
+
+            tasks.forEach(task => {
+                const associatedProject = projects.find(p => p.projectId === task.projectId)
+                const projectName = associatedProject ? associatedProject.name : "No Project";
+                const projectColor = associatedProject ? associatedProject.color : "#e2e8f0";
+
+                const card = DOMRenderer.#createTaskCard(task, projectName, projectColor);
+
+                switch (task.status) {
+                    case "todo":
+                        if (todoColumn) { todoColumn.appendChild(card); todoCounters++; };
+                        break;
+                    case "progress":
+                        if (progressColumn) { progressColumn.appendChild(card); progressCounters++; };
+                        break;
+                    case "completed":
+                        if (completedColumn) { completedColumn.appendChild(card); completedCounters++; };
+                        break;
+                }
+            })
+
+            if (todoCount) todoCount.textContent = todoCounters;
+            if (progressCount) progressCount.textContent = progressCounters;
+            if (completedCount) completedCount.textContent = completedCounters;
+        }
+
+        static renderProjectsSelect(projects) {
+            const projectSelect = document.getElementById("task-project");
+            if (!projectSelect) return;
+
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.disabled = true;
+            defaultOption.selected = true;
+            defaultOption.textContent = "Select project";
+
+            projectSelect.replaceChildren(defaultOption);
+
+            projects.forEach(project => {
+                const option = document.createElement("option");
+                option.value = project.projectId;
+                option.textContent = project.name;
+                projectSelect.appendChild(option)
+            })
+        }
+
+        // ==========================================================================
+        // PRIVATE METHODS
+        // ==========================================================================
+
+        static #createTaskCard(task, projectName, projectColor) {
+            const taskWrapper = document.createElement("li");
+            taskWrapper.className = "task-board__item";
+
+            const article = document.createElement("article");
+            article.classList.add("task-card", `task-card--${task.status}`);
+
+            article.appendChild(DOMRenderer.#createTaskCompletion(task));
+            article.appendChild(DOMRenderer.#createTaskInfo(task, projectName, projectColor));
+
+            taskWrapper.appendChild(article);
+            return taskWrapper;
+        }
+
+        static #createTaskCompletion(task) {
+            const completion = document.createElement("div");
+            completion.className = "task-card__completion";
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.dataset.id = task.taskId;
+            checkbox.className = "task-card__checkbox";
+
+            const checkboxLabel = document.createElement("label");
+            checkboxLabel.htmlFor = task.taskId;
+            checkboxLabel.className = "sr-only";
+            checkboxLabel.textContent = `Mark '${task.name}' as completed`
+            
+            completion.appendChild(checkbox);
+            completion.appendChild(checkboxLabel);
+
+            return completion;
+        }
+
+        static #createTaskInfo(task, projectName, projectColor) {
+            const content = document.createElement("div");
+            content.className = "task-card__content";
+
+            const name = document.createElement("h3");
+            name.className = "task-card__title";
+            name.textContent = task.name;
+
+            const p = document.createElement("p");
+            p.className = "task-card__description";
+            p.textContent = task.description;
+
+            content.appendChild(name);
+            content.appendChild(p);
+            content.appendChild(DOMRenderer.#createCardFooter(task, projectName, projectColor));
+
+            return content;
+        }
+
+        static #createCardFooter(task, projectName, projectColor) {
+            const footer = document.createElement("div");
+            footer.className = "task-card__meta";
+
+            const dueDate = document.createElement("time");
+            dueDate.className = "task-card__date";
+            dueDate.dateTime = task.dueDate;
+            dueDate.textContent = task.dueDate ? `${task.dueDate}` : "No due date";
+
+            const calendarImg = document.createElement("img");
+            calendarImg.src = "./assets/calendar.png";
+            calendarImg.alt = "Calendar icon";
+            calendarImg.className = "task-card__meta-icon";
+
+            dueDate.appendChild(calendarImg);
+
+            const badges = document.createElement("div");
+            badges.className = "task-card__badges";
+
+            const project = document.createElement("span");
+            project.className = "task-card__project-badge";
+            project.textContent = projectName;
+            project.style.backgroundColor = `${projectColor}36`;
+
+            const priority = document.createElement("span");
+            priority.classList.add("task-card__priority", `task-card__priority--${task.priority}`);
+            priority.textContent = task.priority;   
+
+            badges.appendChild(project);
+            badges.appendChild(priority);
+
+            footer.appendChild(dueDate);
+            footer.appendChild(badges);
+
+            return footer;
+        }
     }
-}
