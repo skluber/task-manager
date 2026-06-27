@@ -27,6 +27,7 @@ export class AppController {
         this.#setupProjectModalEvents();
         this.#setupTaskModalEvents();
         this.#setupDraggableColumns();
+        this.#setupCheckboxEvents();
     }
 
     // ==========================================================================
@@ -67,6 +68,32 @@ export class AppController {
         if (form) {
             form.addEventListener("submit", (e) => this.#handleTaskSubmit(e));
         }
+    }
+
+    #setupCheckboxEvents() {
+        const board = document.querySelector(".task-board");;
+        if (!board) return;
+
+        board.addEventListener("change", (e) => {
+            if (e.target.classList.contains("task-card__checkbox")) {
+                const checkbox = e.target;
+                const taskId = checkbox.dataset.id;
+                
+                const newStatus = checkbox.checked ? "completed" : "todo";
+
+                try {
+                    this.TaskManager.updateTaskStatus(taskId, newStatus);
+                    
+                    setTimeout(() => {
+                        DOMRenderer.renderTasks(this.TaskManager.tasks, this.TaskManager.projects);
+                    }, 0);
+
+                } catch (error) {
+                    console.error(error.message);
+                    checkbox.checked = !checkbox.checked;
+                }
+            }
+        });
     }
 
     #setupDraggableColumns() {
