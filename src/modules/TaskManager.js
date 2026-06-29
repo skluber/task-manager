@@ -153,6 +153,7 @@ export class TaskManager {
                 return this.getAllTasks();
                 break;
             default:
+                this.state = PAGE_STATES.ALL;
                 return this.getTodayTasks();
                 break;
         }
