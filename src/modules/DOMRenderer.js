@@ -155,7 +155,6 @@ export class DOMRenderer {
     static renderFilterState(currentState) {
         let filter;
         switch (currentState) {
-            
             case PAGE_STATES.TODAY:
                 filter = document.getElementById("todayState");
                 break;
@@ -165,6 +164,9 @@ export class DOMRenderer {
                 break;
         
             case PAGE_STATES.ALL:
+                filter = document.getElementById("allState");
+                break;
+            default:
                 filter = document.getElementById("allState");
                 break;
         }
