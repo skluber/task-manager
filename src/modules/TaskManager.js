@@ -8,7 +8,7 @@ export class TaskManager {
     constructor() {
         this.projects = this.#loadFromStorage("projects").map(p => new Project(p));
         this.tasks = this.#loadFromStorage("tasks").map(t => new Task(t));
-        this.state = this.#loadFromStorage("state");
+        this.state = this.#loadFromStorage("state") ?? PAGE_STATES.ALL;
     }
 
     // ==========================================================================
