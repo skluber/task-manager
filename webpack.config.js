@@ -13,7 +13,7 @@ export default {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
-    publicPath: '', 
+    publicPath: "/task-manager/", 
   },
   devtool: 'inline-source-map',
   plugins: [
