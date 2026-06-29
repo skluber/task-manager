@@ -1,4 +1,6 @@
     import { IconManager } from './IconManager.js';
+    import { format, parseISO } from 'date-fns';
+    import { enUS } from 'date-fns/locale';
     
     export class DOMRenderer {
         static get #elements() {
@@ -218,8 +220,21 @@
 
             const dueDate = document.createElement("time");
             dueDate.className = "task-card__date";
+
+            if (task.dueDate && task.dueDate.trim() !== "") {
+                try {
+                    const dateObject = parseISO(task.dueDate);
+                    const formattedDate = format(dateObject, 'dd MMM, yyyy', { locale: enUS });
+                    dueDate.textContent = formattedDate;
+
+                } catch (error) {
+                    dueDate.textContent = "No deadline";
+                }
+            } else {
+                dueDate.textContent = "No deadline";
+            }
+
             dueDate.dateTime = task.dueDate;
-            dueDate.textContent = task.dueDate ? `${task.dueDate}` : "No due date";
 
             const calendarIconContainer = document.createElement("span");
             calendarIconContainer.className = "task-card__meta-icon";
