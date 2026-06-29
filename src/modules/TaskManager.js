@@ -112,7 +112,7 @@ export class TaskManager {
             throw new Error(`Task Manager Error: Project Name "${projectName}" does not exist.`);
         }
 
-        const project = this.projects.find(p => p.name === projectName);
+        const project = p => p.name.toLowerCase() === projectName.trim().toLowerCase();
         return project.projectId;
     }
 
