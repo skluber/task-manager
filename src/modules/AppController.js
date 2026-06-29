@@ -28,6 +28,7 @@ export class AppController {
         this.#setupTaskModalEvents();
         this.#setupDraggableColumns();
         this.#setupCheckboxEvents();
+        this.#setupSidebarEvents();
     }
 
     // ==========================================================================
@@ -130,6 +131,33 @@ export class AppController {
                 }
             });
         });
+    }
+
+    #setupSidebarEvents() {
+        const sidebarContainer = document.querySelector(".sidebar");
+
+        if (!sidebarContainer) return;
+
+        sidebarContainer.addEventListener("click", (e) => {
+            const projectBtn = e.target.closest(".sidebar__project-button");
+            if (!projectBtn) return;
+
+            const projectId = projectBtn.dataset.id;
+            const projectName = projectBtn.textContent;
+            const numberOfTasks = this.TaskManager.getNumberOfTasksByProject(projectId);
+
+            const message = `Are you sure you want to delete the project "${projectName}"?\nThis action will permanently delete the project and its ${numberOfTasks} associated tasks.`;
+            const userConfirmed = confirm(message);
+
+            if (userConfirmed) {
+                this.TaskManager.deleteProject(projectId);
+
+                DOMRenderer.renderProjectsSidebar(this.TaskManager.projects);
+                DOMRenderer.renderTasks(this.TaskManager.tasks, this.TaskManager.projects);
+            } else {
+                console.log("Project removal cancelled by user")
+            }
+        })
     }
 
     // ==========================================================================

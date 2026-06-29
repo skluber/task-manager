@@ -107,3 +107,11 @@
   border-radius: 50%;
   background-color: var(--text-muted);
 }
+
+.sidebar__project-button .sidebar__filter-icon {
+    display: none;
+}
+
+.sidebar__project-button:hover .sidebar__filter-icon {
+    display: inline-block;
+}

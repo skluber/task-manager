@@ -95,6 +95,14 @@ export class TaskManager {
         return this.tasks.filter(t => t.projectId === projectId);
     }
 
+    getNumberOfTasksByProject(projectId) {
+        if (!this.#projectIdExists(projectId)) {
+            throw new Error(`Task Manager Error: Cannot get tasks. Project ID "${projectId}" does not exist.`);
+        }
+        
+        return (this.tasks.filter(t => t.projectId === projectId)).length;
+    }
+
     getProjectIdByName(projectName) {
         if (!this.#projectNameExists(projectName)) {
             throw new Error(`Task Manager Error: Project Name "${projectName}" does not exist.`);

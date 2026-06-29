@@ -63,6 +63,7 @@
                 // 2. Button
                 const button = document.createElement("button");
                 button.className = "sidebar__project-button";
+                button.dataset.id = project.projectId;
 
                 // 3. Dot
                 const dot = document.createElement("div");
@@ -75,9 +76,16 @@
                 name.className = "sidebar__project-name";
                 name.textContent = project.name;
 
-                // 5. Appends
+                // 5. Remove icon
+                const rmIcon = document.createElement("span");
+                rmIcon.className = "sidebar__filter-icon";
+                rmIcon.innerHTML = IconManager.get('trash'); 
+                rmIcon.setAttribute("aria-label", "Trash icon");
+
+                // 6. Appends
                 button.appendChild(dot);
                 button.appendChild(name);
+                button.appendChild(rmIcon);
                 listItem.appendChild(button);
                 
                 DOMRenderer.#elements.projectsList.appendChild(listItem);
