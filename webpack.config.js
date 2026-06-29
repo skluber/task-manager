@@ -1,12 +1,13 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'; 
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default {
-  mode: 'development',
+  mode: 'production', 
   entry: './src/index.js',
   output: {
     filename: 'main.js',
@@ -17,7 +18,10 @@ export default {
   devtool: 'inline-source-map',
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html', 
+      template: './index.html',
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'styles.css', 
     }),
   ],
   devServer: {
@@ -29,7 +33,7 @@ export default {
     rules: [
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.(png|jpg|jpeg|gif)$/i,
