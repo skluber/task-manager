@@ -13,7 +13,7 @@ export default {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
-    publicPath: 'auto', 
+    publicPath: '', 
   },
   devtool: 'inline-source-map',
   plugins: [
