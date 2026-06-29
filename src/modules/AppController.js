@@ -1,5 +1,7 @@
 import { TaskManager } from "./TaskManager.js";
 import { DOMRenderer } from "./DOMRenderer.js";
+import { PAGE_STATES } from './PageStates.js';
+
 
 export class AppController {
     constructor() {
@@ -18,7 +20,8 @@ export class AppController {
         }
 
         DOMRenderer.renderProjectsSidebar(this.TaskManager.projects);
-        DOMRenderer.renderTasks(this.TaskManager.tasks, this.TaskManager.projects);
+        DOMRenderer.renderTasks(this.TaskManager.getCurrentStateTasks(), this.TaskManager.projects);
+        DOMRenderer.renderFilterState(this.TaskManager.state);
 
         this.setupEventsListeners();
     }
@@ -86,7 +89,7 @@ export class AppController {
                     this.TaskManager.updateTaskStatus(taskId, newStatus);
                     
                     setTimeout(() => {
-                        DOMRenderer.renderTasks(this.TaskManager.tasks, this.TaskManager.projects);
+                        DOMRenderer.renderTasks(this.TaskManager.getCurrentStateTasks(), this.TaskManager.projects);
                     }, 0);
 
                 } catch (error) {
@@ -123,7 +126,7 @@ export class AppController {
                     this.TaskManager.updateTaskStatus(taskId, newStatus);
                     
                     setTimeout(() => {
-                        DOMRenderer.renderTasks(this.TaskManager.tasks, this.TaskManager.projects);
+                        DOMRenderer.renderTasks(this.TaskManager.getCurrentStateTasks(), this.TaskManager.projects);
                     }, 0);
 
                 } catch (error) {
@@ -140,22 +143,15 @@ export class AppController {
 
         sidebarContainer.addEventListener("click", (e) => {
             const projectBtn = e.target.closest(".sidebar__project-button");
-            if (!projectBtn) return;
+            if (projectBtn) {
+                this.#handleProjectSidebarClick(projectBtn);
+                return;
+            }
 
-            const projectId = projectBtn.dataset.id;
-            const projectName = projectBtn.textContent;
-            const numberOfTasks = this.TaskManager.getNumberOfTasksByProject(projectId);
-
-            const message = `Are you sure you want to delete the project "${projectName}"?\nThis action will permanently delete the project and its ${numberOfTasks} associated tasks.`;
-            const userConfirmed = confirm(message);
-
-            if (userConfirmed) {
-                this.TaskManager.deleteProject(projectId);
-
-                DOMRenderer.renderProjectsSidebar(this.TaskManager.projects);
-                DOMRenderer.renderTasks(this.TaskManager.tasks, this.TaskManager.projects);
-            } else {
-                console.log("Project removal cancelled by user")
+            const filterBtn = e.target.closest(".sidebar__filter-button");
+            if (filterBtn) {
+                this.#handleFilterSidebarClick(filterBtn);
+                return;
             }
         })
     }
@@ -202,11 +198,42 @@ export class AppController {
                 projectId: projectInput.value
             });
 
-            DOMRenderer.renderTasks(this.TaskManager.tasks, this.TaskManager.projects);
+            DOMRenderer.renderTasks(this.TaskManager.getCurrentStateTasks(), this.TaskManager.projects);
             DOMRenderer.closeModal("task");
         } catch (error) {
             alert(error.message);
         }
 
+    }
+
+    #handleProjectSidebarClick(projectBtn) {
+        const projectId = projectBtn.dataset.id;
+        const projectName = projectBtn.textContent;
+        const numberOfTasks = this.TaskManager.getNumberOfTasksByProject(projectId);
+
+        const message = `Are you sure you want to delete the project "${projectName}"?\nThis action will permanently delete the project and its ${numberOfTasks} associated tasks.`;
+        const userConfirmed = confirm(message);
+
+        if (userConfirmed) {
+            this.TaskManager.deleteProject(projectId);
+
+            DOMRenderer.renderProjectsSidebar(this.TaskManager.projects);
+            DOMRenderer.renderTasks(this.TaskManager.tasks, this.TaskManager.projects);
+        } else {
+            console.log("Project removal cancelled by user")
+        }
+    }
+
+    #handleFilterSidebarClick(filterBtn) {
+        const filters = document.querySelectorAll(".sidebar__filter-button");
+        filters.forEach(item => {
+            item.classList.remove("sidebar__filter-button--active");
+            item.removeAttribute("aria-current")
+        })
+
+        filterBtn.classList.add("sidebar__filter-button--active");
+        filterBtn.setAttribute("aria-current", "page");
+        this.TaskManager.changePageState(filterBtn.id);
+        DOMRenderer.renderTasks(this.TaskManager.getCurrentStateTasks(), this.TaskManager.projects)
     }
 }

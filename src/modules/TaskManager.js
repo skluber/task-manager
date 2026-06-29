@@ -1,10 +1,14 @@
 import { Project } from './Project.js';
 import { Task } from './Task.js';
+import { isToday, isThisWeek } from 'date-fns';
+import { PAGE_STATES } from './PageStates.js';
+
 
 export class TaskManager {
     constructor() {
         this.projects = this.#loadFromStorage("projects").map(p => new Project(p));
         this.tasks = this.#loadFromStorage("tasks").map(t => new Task(t));
+        this.state = this.#loadFromStorage("state");
     }
 
     // ==========================================================================
@@ -17,7 +21,7 @@ export class TaskManager {
 
     #loadFromStorage(key) {
         const data = localStorage.getItem(key);
-        return data ? JSON.parse(data) : [];
+        return data ? JSON.parse(data) : "[]";
     }
 
     #projectIdExists(projectId) {
@@ -126,5 +130,43 @@ export class TaskManager {
         
         this.#saveToStorage("tasks", this.tasks);
         return task;
+    }
+
+    changePageState(newState) {
+        if (!Object.values(PAGE_STATES).includes(newState)) {
+            throw new Error(`Cannot resolve page state: "${newState}"`);        
+        } 
+
+        this.state = newState;
+        this.#saveToStorage("state", newState);
+    }
+
+    getCurrentStateTasks() {
+        switch (this.state) {
+            case PAGE_STATES.TODAY:
+                return this.getTodayTasks();
+                break;
+            case PAGE_STATES.WEEK:
+                return this.getWeekTasks();
+                break;
+            case PAGE_STATES.ALL:
+                return this.getAllTasks();
+                break;
+            default:
+                return this.getTodayTasks();
+                break;
+        }
+    }
+
+    getTodayTasks() {
+        return this.tasks.filter(task => task.dueDate && isToday(new Date(task.dueDate)));
+    }
+
+    getWeekTasks() {
+        return this.tasks.filter(task => task.dueDate && isThisWeek(new Date(task.dueDate)));
+    }
+
+    getAllTasks() {
+        return this.tasks;
     }
 }
