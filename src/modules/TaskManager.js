@@ -6,9 +6,9 @@ import { PAGE_STATES } from './PageStates.js';
 
 export class TaskManager {
     constructor() {
-        this.projects = this.#loadFromStorage("projects").map(p => new Project(p));
-        this.tasks = this.#loadFromStorage("tasks").map(t => new Task(t));
-        this.state = this.#loadFromStorage("state") ?? PAGE_STATES.ALL;
+        this.projects = this.#loadFromStorage("projects", []).map(p => new Project(p));
+        this.tasks = this.#loadFromStorage("tasks", []).map(t => new Task(t));
+        this.state = this.#loadFromStorage("state", PAGE_STATES.ALL);
     }
 
     // ==========================================================================
@@ -19,10 +19,10 @@ export class TaskManager {
         localStorage.setItem(key, JSON.stringify(data));
     }
 
-    #loadFromStorage(key) {
-        const data = localStorage.getItem(key);
-        return data ? JSON.parse(data) : [];
-    }
+    #loadFromStorage(key, fallback = []) {
+    const data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : fallback;
+}
 
     #projectIdExists(projectId) {
         return this.projects.some(p => p.projectId === projectId);
@@ -154,7 +154,7 @@ export class TaskManager {
                 break;
             default:
                 this.state = PAGE_STATES.ALL;
-                return this.getTodayTasks();
+                return this.getAllTasks();
                 break;
         }
     }
